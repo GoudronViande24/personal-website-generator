@@ -1,0 +1,8 @@
+.header img {
+	max-width: 100px;
+	max-height: 100%;
+}
+
+.badge {
+	background-color: rgb(119, 143, 168);
+}
