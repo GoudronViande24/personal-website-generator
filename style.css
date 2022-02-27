@@ -6,3 +6,7 @@
 .badge {
 	background-color: rgb(119, 143, 168);
 }
+
+.badge.bg-info {
+	background-color: rgb(13, 202, 240);
+}
