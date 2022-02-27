@@ -36,6 +36,8 @@
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -211,10 +213,38 @@
 				</div>
 			</div>
 
-			
-		</div>
+			<div class="row align-items-center mt-4">
+				<div id="form-sidebar" class="col-md-6">
+					<h3 class="mb-4">About me</h3>
 
-		
+					<div class="mb-3">
+						<label for="about-me" class="form-label">Content</label>
+						<div contenteditable class="form-control text-start" id="about-me"></div>
+					</div>
+
+					<div class="mb-3">
+						<label for="about-me-mode" class="form-label">Mode</label><br>
+						<div class="btn-group" id="about-me-mode">
+							<input type="radio" class="btn-check" name="about-me-mode" value="text" id="about-me-mode-text"
+								autocomplete="off" checked>
+							<label class="btn btn-secondary" for="about-me-mode-text"><i class="fs-5 bi bi-text-left"></i></label>
+
+							<input type="radio" class="btn-check" name="about-me-mode" value="md" id="about-me-mode-md"
+								autocomplete="off">
+							<label class="btn btn-secondary" for="about-me-mode-md"><i class="fs-5 bi bi-markdown"></i></label>
+
+							<input type="radio" class="btn-check" name="about-me-mode" value="html" id="about-me-mode-html"
+								autocomplete="off">
+							<label class="btn btn-secondary" for="about-me-mode-html"><i class="fs-5 bi bi-code-slash"></i></label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div id="about-me-preview" class="container-fluid text-start"></div>
+				</div>
+			</div>
+
+		</div>
 
 	</div>
 

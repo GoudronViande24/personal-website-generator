@@ -10,3 +10,11 @@
 .badge.bg-info {
 	background-color: rgb(13, 202, 240);
 }
+
+#about-me, #about-me-preview {
+	min-height: 175px;
+}
+
+#about-me-preview img {
+	max-width: 100%;
+}
