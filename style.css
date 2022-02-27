@@ -18,3 +18,10 @@
 #about-me-preview img {
 	max-width: 100%;
 }
+
+#projects-preview div.card-img-top {
+	height: 100px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
