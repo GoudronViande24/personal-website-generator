@@ -26,6 +26,12 @@
 	background-position: bottom;
 }
 
-#project-template {
+#project-template, #skill-template {
 	display: none;
+}
+
+#skills-preview .progress {
+	height: 3px;
+	max-width: 200px;
+	margin: auto;
 }

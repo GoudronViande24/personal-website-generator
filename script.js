@@ -50,7 +50,11 @@ const form = {};
 	"projects-add",
 	"project-template",
 	"projects",
-	"projects-preview"
+	"projects-preview",
+	"skills-add",
+	"skill-template",
+	"skills",
+	"skills-preview"
 ].forEach(i => form[i] = document.getElementById(i));
 
 // Import from GitHub
@@ -151,6 +155,10 @@ async function updateAboutMeMode() {
 	updateAboutMePreview();
 };
 
+// ############################
+// #         PROJECTS         #
+// ############################
+
 /**
  * List of all projects
  * @type {Element[]}
@@ -235,4 +243,91 @@ function updateProjectsPreview() {
 	});
 
 	form["projects-preview"].innerHTML = previews.join("\n");
+};
+
+// ############################
+// #          SKILLS          #
+// ############################
+
+/**
+ * List of all skills
+ * @type {Element[]}
+ */
+const skills = [];
+
+// Add a skill button listener
+form["skills-add"].addEventListener("click", addSkill);
+
+/**
+ * Add a skill to the list
+ * @param {Boolean} updatePreview - Update or not the preview
+ * @returns {Element} - The new skill in the form
+ */
+function addSkill(updatePreview) {
+	const clone = form["skill-template"].cloneNode(true);
+	clone.id = "";
+	const newSkill = form["skills"].appendChild(clone);
+	skills.push(newSkill);
+	newSkill.querySelector("button.skill-remove").addEventListener("click", removeSkill, { once: true });
+	// Set event listeners for the inputs to refresh the preview
+	[
+		"skill-name",
+		"skill-icon"
+	].forEach(item => newSkill.querySelector(`input.${item}`).addEventListener("keyup", updateSkillsPreview));
+	newSkill.querySelector(`input.skill-percentage`).addEventListener("change", updateSkillPercentage);
+	if (updatePreview) updateSkillsPreview();
+	return newSkill
+};
+
+
+/**
+ * Update the percentage of a skill
+ * @param {Event} event
+ */
+function updateSkillPercentage(event) {
+	event.target.parentNode.parentNode.querySelector(`span.skill-percentage-value`).innerText = `${event.target.value}%`;
+	updateSkillsPreview();
+};
+
+/**
+ * Remove a skill from the list
+ * @param {Event} event
+ */
+async function removeSkill(event) {
+	skills.forEach((skill, i) => {
+		if (skill == event.target.parentNode) skills.splice(i, 1);
+	});
+	event.target.parentNode.remove();
+	updateSkillsPreview();
+};
+
+/**
+ * Remove all skills in the form
+ */
+async function removeAllSkills() {
+	skills.forEach(skill => skill.remove());
+	skills.length = 0;
+	updateSkillsPreview();
+};
+
+/**
+ * Update the preview of the skills section
+ */
+function updateSkillsPreview() {
+	const previews = [];
+
+	skills.forEach(skill => {
+		previews.push(`
+		<div class="mb-5">
+			<i class="bi bi-${skill.querySelector("input.skill-icon").value.toLowerCase()} fs-1"></i>
+			<div class="progress my-3">
+				<div class="progress-bar" role="progressbar" style="width: ${skill.querySelector("input.skill-percentage").value}%" aria-valuenow="${skill.querySelector("input.skill-percentage").value}" aria-valuemin="0"
+					aria-valuemax="100"></div>
+			</div>
+			<h5>${skill.querySelector("input.skill-name").value}</h5>
+		</div>
+		`);
+	});
+
+	form["skills-preview"].innerHTML = previews.join("\n");
 }; 
