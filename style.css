@@ -25,3 +25,7 @@
 	background-repeat: no-repeat;
 	background-position: bottom;
 }
+
+#project-template {
+	display: none;
+}
