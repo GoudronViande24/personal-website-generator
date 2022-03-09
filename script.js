@@ -54,7 +54,11 @@ const form = {};
 	"skills-add",
 	"skill-template",
 	"skills",
-	"skills-preview"
+	"skills-preview",
+	"achievements-add",
+	"achievement-template",
+	"achievements",
+	"achievements-preview"
 ].forEach(i => form[i] = document.getElementById(i));
 
 // Import from GitHub
@@ -330,4 +334,90 @@ function updateSkillsPreview() {
 	});
 
 	form["skills-preview"].innerHTML = previews.join("\n");
-}; 
+};
+
+// ############################
+// #       ACHIEVEMENTS       #
+// ############################
+
+/**
+ * List of all achievements
+ * @type {Element[]}
+ */
+const achievements = [];
+
+// Add a achievement button listener
+form["achievements-add"].addEventListener("click", addAchievement);
+
+/**
+ * Add a achievement to the list
+ * @param {Boolean} updatePreview - Update or not the preview
+ * @returns {Element} - The new achievement in the form
+ */
+function addAchievement(updatePreview) {
+	const clone = form["achievement-template"].cloneNode(true);
+	clone.id = "";
+	const newAchievement = form["achievements"].appendChild(clone);
+	achievements.push(newAchievement);
+	newAchievement.querySelector("button.achievement-remove").addEventListener("click", removeAchievement, { once: true });
+	// Set event listeners for the inputs to refresh the preview
+	[
+		"achievement-name",
+		"achievement-icon",
+		"achievement-school",
+		"achievement-description",
+		"achievement-link",
+		"achievement-date"
+	].forEach(item => newAchievement.querySelector(`input.${item}`).addEventListener("keyup", updateAchievementsPreview));
+	if (updatePreview) updateAchievementsPreview();
+	return newAchievement
+};
+
+/**
+ * Remove a achievement from the list
+ * @param {Event} event
+ */
+async function removeAchievement(event) {
+	achievements.forEach((achievement, i) => {
+		if (achievement == event.target.parentNode) achievements.splice(i, 1);
+	});
+	event.target.parentNode.remove();
+	updateAchievementsPreview();
+};
+
+/**
+ * Remove all achievements in the form
+ */
+async function removeAllAchievements() {
+	achievements.forEach(achievement => achievement.remove());
+	achievements.length = 0;
+	updateAchievementsPreview();
+};
+
+/**
+ * Update the preview of the achievements section
+ */
+function updateAchievementsPreview() {
+	const previews = [];
+
+	achievements.forEach(achievement => {
+		previews.push(`
+		<div class="card mb-3">
+			<div class="card-header">
+				${achievement.querySelector("input.achievement-school").value}
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">${achievement.querySelector("input.achievement-name").value}</h5>
+				<i class="bi bi-${achievement.querySelector("input.achievement-icon").value.toLowerCase()}"></i>
+				<p class="card-text">${achievement.querySelector("input.achievement-description").value}</p>
+				<a href="${achievement.querySelector("input.achievement-link").value}" target="_blank" class="btn btn-secondary">
+					See certificate
+				</a>
+			</div>
+			<div class="card-footer text-muted">${achievement.querySelector("input.achievement-date").value}</div>
+		</div>
+		`);
+	});
+
+	form["achievements-preview"].innerHTML = previews.join("\n");
+};
