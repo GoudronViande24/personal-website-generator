@@ -58,7 +58,11 @@ const form = {};
 	"achievements-add",
 	"achievement-template",
 	"achievements",
-	"achievements-preview"
+	"achievements-preview",
+	"contact-infos-add",
+	"contact-info-template",
+	"contact-infos",
+	"contact-infos-preview"
 ].forEach(i => form[i] = document.getElementById(i));
 
 // Import from GitHub
@@ -420,4 +424,85 @@ function updateAchievementsPreview() {
 	});
 
 	form["achievements-preview"].innerHTML = previews.join("\n");
+};
+
+// ############################
+// #       CONTACT INFO       #
+// ############################
+
+/**
+ * List of all contact methods
+ * @type {Element[]}
+ */
+const contactMethods = [];
+
+// Add a contact method button listener
+form["contact-infos-add"].addEventListener("click", addContactMethod);
+
+/**
+ * Add a contact method to the list
+ * @param {Boolean} updatePreview - Update or not the preview
+ * @returns {Element} - The new contact method in the form
+ */
+function addContactMethod(updatePreview) {
+	const clone = form["contact-info-template"].cloneNode(true);
+	clone.id = "";
+	const newContactMethod = form["contact-infos"].appendChild(clone);
+	contactMethods.push(newContactMethod);
+	newContactMethod.querySelector("button.contact-info-remove").addEventListener("click", removeContactMethod, { once: true });
+	// Set event listeners for the inputs to refresh the preview
+	[
+		"contact-info-name",
+		"contact-info-icon",
+		"contact-info-link"
+	].forEach(item => newContactMethod.querySelector(`input.${item}`).addEventListener("keyup", updateContactMethodsPreview));
+	if (updatePreview) updateContactMethodsPreview();
+	return newContactMethod
+};
+
+/**
+ * Remove a contact method from the list
+ * @param {Event} event
+ */
+async function removeContactMethod(event) {
+	contactMethods.forEach((contactMethod, i) => {
+		if (contactMethod == event.target.parentNode) contactMethods.splice(i, 1);
+	});
+	event.target.parentNode.remove();
+	updateContactMethodsPreview();
+};
+
+/**
+ * Remove all contact methods in the form
+ */
+async function removeAllContactMethods() {
+	contactMethods.forEach(contactMethod => contactMethod.remove());
+	contactMethods.length = 0;
+	updateContactMethodsPreview();
+};
+
+/**
+ * Update the preview of the contact methods section
+ */
+function updateContactMethodsPreview() {
+	const previews = [];
+
+	contactMethods.forEach(contactMethod => {
+		previews.push(`
+		<a class="text-reset text-decoration-none" href="${contactMethod.querySelector("input.contact-info-link").value}" target="_blank">
+			<div class="card mb-3 py-3">
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="bi bi-${contactMethod.querySelector("input.contact-info-icon").value.toLowerCase()} fs-1"></i>
+					</h5>
+					<h5 class="card-text">
+						${contactMethod.querySelector("input.contact-info-name").value}
+					</h5>
+				</div>
+			</div>
+		</a>
+		`);
+	});
+
+	form["contact-infos-preview"].innerHTML = previews.join("\n");
 };

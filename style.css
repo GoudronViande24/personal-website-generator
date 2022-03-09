@@ -26,7 +26,7 @@
 	background-position: bottom;
 }
 
-#project-template, #skill-template, #achievement-template {
+#project-template, #skill-template, #achievement-template, #contact-info-template {
 	display: none;
 }
 
