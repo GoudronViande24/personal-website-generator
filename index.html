@@ -36,8 +36,6 @@
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -380,12 +378,16 @@
 								</div>
 							</div>
 
-							<button class="btn btn-secondary achievement-remove"><i class="bi bi-dash-lg"></i> Remove achievement</button>
+							<button class="btn btn-secondary achievement-remove">
+								<i class="bi bi-dash-lg"></i> Remove achievement
+							</button>
 						</div>
 
 					</div>
 
-					<button class="btn btn-secondary" id="achievements-add"><i class="bi bi-plus-lg"></i> Add an achievement</button>
+					<button class="btn btn-secondary" id="achievements-add">
+						<i class="bi bi-plus-lg"></i> Add an achievement
+					</button>
 
 				</div>
 				<div class="col-md-4">
@@ -417,12 +419,16 @@
 								<input type="text" class="form-control contact-info-link">
 							</div>
 
-							<button class="btn btn-secondary contact-info-remove"><i class="bi bi-dash-lg"></i> Remove contact method</button>
+							<button class="btn btn-secondary contact-info-remove">
+								<i class="bi bi-dash-lg"></i> Remove contact method
+							</button>
 						</div>
 
 					</div>
 
-					<button class="btn btn-secondary" id="contact-infos-add"><i class="bi bi-plus-lg"></i> Add a contact method</button>
+					<button class="btn btn-secondary" id="contact-infos-add">
+						<i class="bi bi-plus-lg"></i> Add a contact method
+					</button>
 
 				</div>
 				<div class="col-md-4">
@@ -432,7 +438,71 @@
 
 		</div>
 
-	</div>
+		<div id="export-section" class="mb-5">
+			<h2>Export</h2>
+
+			<div class="row mt-4 text-start">
+
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title"><i class="bi bi-code-slash"></i> Static HTML site</h3>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								Easiest way to have a working website quickly.
+								Simple static HTML5 website that you can host for free on multiple platforms:
+								GitHub Pages, Cloudflare Pages, Netlify and many others...
+							</p>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-secondary w-100" type="button" id="export-to-html">Export to static site</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title"><i class="bi bi-braces"></i> JSON file</h3>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								You want to keep a copy of this form for later?
+								The JSON file can be imported at the top of the page to resume the editing!
+								Since we do not keep the data from this website, it is the only way to save it for later.
+							</p>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-secondary w-100" type="button" id="export-to-json">Export to JSON file</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title"><i class="bi bi-exclamation-triangle-fill"></i> Reset the form</h3>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								Reset the form to start everything over.
+							</p>
+							<div class="alert alert-danger mb-0" role="alert">
+								<strong>Warning:</strong> This cannot be reverted!
+							</div>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-outline-warning w-100" type="button" id="reset-form">Reset the form</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div> <!-- end main container -->
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

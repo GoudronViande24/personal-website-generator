@@ -63,7 +63,7 @@ const form = {};
 	"contact-info-template",
 	"contact-infos",
 	"contact-infos-preview"
-].forEach(i => form[i] = document.getElementById(i));
+].forEach(element => form[element] = document.getElementById(element));
 
 // Import from GitHub
 githubButton.addEventListener("click", async () => {
@@ -129,7 +129,10 @@ githubButton.addEventListener("click", async () => {
 	};
 });
 
-// About me
+// ############################
+// #         ABOUT ME         #
+// ############################
+
 form["about-me"].addEventListener("keyup", updateAboutMePreview);
 form["about-me-mode"].addEventListener("click", updateAboutMeMode);
 
@@ -506,3 +509,44 @@ function updateContactMethodsPreview() {
 
 	form["contact-infos-preview"].innerHTML = previews.join("\n");
 };
+
+// ############################
+// #        RESET FORM        #
+// ############################
+
+/**
+ * Reset the entire form. All data will be lost!
+ */
+function resetEverything() {
+	if (confirm("Are you really really sure you want to reset everything?")) {
+
+		// Reset the sidebar section
+		const formSidebar = document.getElementById("form-sidebar");
+		formSidebar.querySelectorAll("input[type='text']").forEach(element => element.value = "");
+
+		// Reset the about me section
+		form["about-me"].innerText = "";
+		form["about-me-mode-text"].checked = true;
+		updateAboutMeMode();
+
+		// Reset projects section
+		form["projects"].querySelectorAll("button.project-remove").forEach(element => element.click());
+
+		// Reset skills section
+		form["skills"].querySelectorAll("button.skill-remove").forEach(element => element.click());
+
+		// Reset achievements section
+		form["achievements"].querySelectorAll("button.achievement-remove").forEach(element => element.click());
+
+		// Reset contact informations section
+		form["contact-infos"].querySelectorAll("button.contact-info-remove").forEach(element => element.click());
+	}
+};
+
+// Assign the function to the button
+document.getElementById("reset-form").addEventListener("click", resetEverything);
+
+// ############################
+// #      EXPORT TO JSON      #
+// ############################
+
