@@ -608,7 +608,8 @@ function exportToJSON() {
 		const toAdd = {};
 		[
 			"skill-name",
-			"skill-icon"
+			"skill-icon",
+			"skill-percentage"
 		].forEach(item => toAdd[item] = skill.querySelector(`input.${item}`).value);
 		skillsData.push(toAdd);
 	});
@@ -647,4 +648,108 @@ function exportToJSON() {
 	document.body.removeChild(element);
 };
 
+// Assign function to the button
 form["export-to-json"].addEventListener("click", exportToJSON);
+
+/** Import data from a JSON file */
+function importFromJSON() {
+	try {
+		// Get the uploaded file
+		const file = document.getElementById("json-import-file").files[0];
+		// Check if it's a JSON file
+		if (file.type != "application/json") throw new Error("Uploaded file is not of \"application/json\" media type!");
+
+		// Let's read it's content
+		const reader = new FileReader();
+		reader.addEventListener("load", (event) => {
+			// Get the data
+			const data = JSON.parse(event.target.result);
+
+			// Check if the file is incomplete
+			if (!data.form || !data.contactMethods || !data.achievements || !data.skills || !data.projects) {
+				alert("File is not valid! See console for more details.");
+				throw new Error("There is at least one part missing in the file.");
+			};
+
+			// Let's import data!
+			resetEverything();
+			[
+				"name",
+				"nickname",
+				"avatar",
+				"facebook",
+				"instagram",
+				"youtube",
+				"twitch",
+				"discord",
+				"linkedin",
+				"paypal",
+				"pinterest",
+				"reddit",
+				"snapchat",
+				"telegram",
+				"twitter",
+				"github",
+				"stack-overflow",
+				"vimeo"
+			].forEach(item => form[item].value = data.form[item]);
+			form["about-me"].innerText = data.form["about-me"];
+			form[`about-me-mode-${data.form["about-me-mode"]}`].checked = true;
+			updateAboutMeMode();
+
+			data.contactMethods.forEach(method => {
+				const element = addContactMethod(false);
+				[
+					"contact-info-name",
+					"contact-info-icon",
+					"contact-info-link"
+				].forEach(item => element.querySelector(`input.${item}`).value = method[item]);
+			});
+			updateContactMethodsPreview();
+
+			data.achievements.forEach(achievement => {
+				const element = addAchievement(false);
+				[
+					"achievement-name",
+					"achievement-icon",
+					"achievement-school",
+					"achievement-description",
+					"achievement-link",
+					"achievement-date"
+				].forEach(item => element.querySelector(`input.${item}`).value = achievement[item]);
+			});
+			updateAchievementsPreview();
+
+			data.skills.forEach(skill => {
+				const element = addSkill(false);
+				[
+					"skill-name",
+					"skill-icon",
+					"skill-percentage"
+				].forEach(item => element.querySelector(`input.${item}`).value = skill[item]);
+				element.querySelector("input.skill-percentage").dispatchEvent(new Event("change"));
+			});
+
+			data.projects.forEach(project => {
+				const element = addProject(false);
+				[
+					"project-name",
+					"project-icon",
+					"project-description",
+					"project-skills",
+					"project-url",
+					"project-thumbnail"
+				].forEach(item => element.querySelector(`input.${item}`).value = project[item]);
+			});
+			updateProjectsPreview();
+		});
+
+		reader.readAsText(file);
+	} catch (e) {
+		alert("File is not valid! See console for more details.");
+		console.error(e);
+	};
+};
+
+// Assign the function to the button
+document.getElementById("json-import-button").addEventListener("click", importFromJSON);

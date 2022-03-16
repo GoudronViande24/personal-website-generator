@@ -60,7 +60,7 @@
 	<div class="container my-5 text-center">
 
 		<div id="import-section" class="mb-5">
-			<h2>Import data from a public profile</h2>
+			<h2>Import</h2>
 
 			<div class="row mt-4 text-start">
 
@@ -90,6 +90,28 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title"><i class="bi bi-braces"></i> Import from JSON file</h3>
+						</div>
+						<div class="card-body">
+							<p class="card-text">Load previously saved JSON file.</p>
+							<p class="card-text">
+								<strong>Imports the entire form. It will overide all current data.</strong>
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="input-group">
+								<input type="file" class="form-control" placeholder="Username" aria-label="JSON file"
+									aria-describedby="json-import-button" id="json-import-file" accept="application/json">
+								<button class="btn btn-outline-secondary" type="button" id="json-import-button">Import</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
 		</div>
