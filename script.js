@@ -62,7 +62,8 @@ const form = {};
 	"contact-infos-add",
 	"contact-info-template",
 	"contact-infos",
-	"contact-infos-preview"
+	"contact-infos-preview",
+	"export-to-json"
 ].forEach(element => form[element] = document.getElementById(element));
 
 // Import from GitHub
@@ -547,6 +548,103 @@ function resetEverything() {
 document.getElementById("reset-form").addEventListener("click", resetEverything);
 
 // ############################
-// #      EXPORT TO JSON      #
+// #           JSON           #
 // ############################
 
+/** Export form to a JSON file */
+function exportToJSON() {
+	// Get data from the form and turn it into JSON
+	const formData = {};
+	[
+		"name",
+		"nickname",
+		"avatar",
+		"facebook",
+		"instagram",
+		"youtube",
+		"twitch",
+		"discord",
+		"linkedin",
+		"paypal",
+		"pinterest",
+		"reddit",
+		"snapchat",
+		"telegram",
+		"twitter",
+		"github",
+		"stack-overflow",
+		"vimeo"
+	].forEach(item => formData[item] = form[item].value);
+	formData["about-me"] = form["about-me"].innerText;
+	formData["about-me-mode"] = document.querySelector("input[name='about-me-mode']:checked").value;
+
+	const contactMethodsData = [];
+	contactMethods.forEach(method => {
+		const toAdd = {};
+		[
+			"contact-info-name",
+			"contact-info-icon",
+			"contact-info-link"
+		].forEach(item => toAdd[item] = method.querySelector(`input.${item}`).value);
+		contactMethodsData.push(toAdd);
+	});
+
+	const achievementsData = [];
+	achievements.forEach(achievement => {
+		const toAdd = {};
+		[
+			"achievement-name",
+			"achievement-icon",
+			"achievement-school",
+			"achievement-description",
+			"achievement-link",
+			"achievement-date"
+		].forEach(item => toAdd[item] = achievement.querySelector(`input.${item}`).value);
+		achievementsData.push(toAdd);
+	});
+
+	const skillsData = [];
+	skills.forEach(skill => {
+		const toAdd = {};
+		[
+			"skill-name",
+			"skill-icon"
+		].forEach(item => toAdd[item] = skill.querySelector(`input.${item}`).value);
+		skillsData.push(toAdd);
+	});
+
+	const projectsData = [];
+	projects.forEach(project => {
+		const toAdd = {};
+		[
+			"project-name",
+			"project-icon",
+			"project-description",
+			"project-skills",
+			"project-url",
+			"project-thumbnail"
+		].forEach(item => toAdd[item] = project.querySelector(`input.${item}`).value);
+		projectsData.push(toAdd);
+	});
+
+	const data = {
+		form: formData,
+		contactMethods: contactMethodsData,
+		achievements: achievementsData,
+		skills: skillsData,
+		projects: projectsData
+	};
+
+	// Generate the JSON file and make the browser download it
+	const element = document.createElement("a");
+	element.setAttribute("href", "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data)));
+	const date = new Date();
+	element.setAttribute("download", `my-personal-website-${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}.json`);
+	element.style.display = "node";
+
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+};
+
+form["export-to-json"].addEventListener("click", exportToJSON);
