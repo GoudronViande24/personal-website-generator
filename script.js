@@ -1,6 +1,9 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 import axios from "https://cdn.skypack.dev/axios";
 import showdown from "https://cdn.skypack.dev/showdown";
+import JSZip from 'https://cdn.skypack.dev/jszip';
+import JSZipUtils from 'https://cdn.skypack.dev/jszip-utils';
+
 const octokit = new Octokit();
 const converter = new showdown.Converter({
 	simplifiedAutoLink: true,
@@ -753,3 +756,62 @@ function importFromJSON() {
 
 // Assign the function to the button
 document.getElementById("json-import-button").addEventListener("click", importFromJSON);
+
+// ############################
+// #        GENERATOR         #
+// ############################
+
+/**
+ * Generate the static website from the template
+ */
+async function generateWebsite() {
+	try {
+		// Prepare the HTML template
+		let zip;
+
+		await JSZipUtils.getBinaryContent("https://github.com/GoudronViande24/personal-website-template/archive/refs/heads/main.zip", async (err, data) => {
+			if (err) throw err;
+			zip = await JSZip.loadAsync(data);
+		});
+
+		let data = await fetch("./template.html");
+		let html = await data.text();
+
+		// Form
+		html.replace("{{name}}", form.name.value);
+		html.replace("{{nickname}}", form.nickname.value);
+		html.replace("{{avatar}}", form.avatar.value);
+
+		// Social accounts
+		[
+			"facebook",
+			"instagram",
+			"youtube",
+			"twitch",
+			"discord",
+			"linkedin",
+			"paypal",
+			"pinterest",
+			"reddit",
+			"snapchat",
+			"telegram",
+			"twitter",
+			"github",
+			"stack-overflow",
+			"vimeo"
+		].forEach(i => {
+			const index = html.indexOf("{{social}}");
+			const link = `<a href="${form[i].value}"><i class="bi bi-${i}"></i></a>`
+			html = html.slice(0, index) + link + html.slice(index);
+		});
+		html.replace("{{social}}", "");
+
+		
+	} catch (e) {
+		alert("An error occured. Check console for details.");
+		console.error(e);
+	}
+}
+
+// Assign the function to the export button
+document.getElementById("export-to-html").addEventListener("click", generateWebsite);

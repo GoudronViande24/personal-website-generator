@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Personal Website</title>
+
+	<link rel="icon" type="image/svg+xml" href="https://assets.artivain.com/fav/main/fav.svg" sizes="any">
+
+	<!-- The page supports both dark and light color schemes, and the page author prefers / default is light. -->
+	<meta name="color-scheme" content="light dark">
+
+	<!--
+		If `prefers-color-scheme` is not supported, fall back to light mode.
+		In this case, inject the `light` CSS before the others, with
+		no media filter so that it will be downloaded with highest priority.
+	-->
+	<script>
+		if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+			document.documentElement.style.display = "none";
+			document.head.insertAdjacentHTML(
+				"beforeend",
+				"<link id=\"css\" rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\" onload=\"document.documentElement.style.display = ''\">"
+			);
+		}
+	</script>
+	<!-- Load the alternate CSS first ... in this case the Bootstrap-Dark Variant CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css" rel="stylesheet"
+		media="(prefers-color-scheme: dark)">
+	<!-- and then the primary CSS last ... in this case the (original) Bootstrap Variant CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"
+		media="(prefers-color-scheme: light)">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+	<link rel="stylesheet" href="style.css">
+
+</head>
+
+<div class="p-3 text-white bg-dark sidebar">
+	<div class="sidebar-content text-center">
+		<div class="name-section">
+			<img src="{{avatar}}" alt="logo" class="logo">
+			<h1>{{name}}</h1>
+			<span class="text-muted">{{nickname}}</span>
+		</div>
+		<hr>
+		<ul class="nav nav-pills flex-column mb-auto">
+
+			<li class="nav-item">
+				<a href="#about" class="nav-link text-white" aria-current="page">
+					<i class="bi bi-person-fill"></i>About me
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#projects" class="nav-link text-white">
+					<i class="bi bi-code-slash"></i>Projects
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#skills" class="nav-link text-white">
+					<i class="bi bi-brush-fill"></i>Skills
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#achievements" class="nav-link text-white">
+					<i class="bi bi-list-check"></i>Achievements
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#contact" class="nav-link text-white">
+					<i class="bi bi-envelope-fill"></i>Contact
+				</a>
+			</li>
+
+		</ul>
+		<hr>
+		<div class="social-networks fs-5">
+			{{social}}
+		</div>
+	</div>
+</div>
+
+<div id="scroll-to-top">
+	<i class="bi bi-arrow-up-circle-fill"></i>
+</div>
+
+<div class="content">
+	<div class="container">
+
+		<div id="about" class="section pt-5">
+			<h2>About me</h2>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis ex ultricies, tincidunt magna nec,
+				finibus tellus. Duis a mauris id nibh bibendum efficitur. Donec commodo diam non diam porttitor, rutrum aliquet
+				quam euismod. In ac leo mi. Vivamus ornare ipsum in ligula lacinia tristique. Quisque scelerisque massa nec orci
+				facilisis rutrum. Suspendisse semper lorem eu ex posuere, vel iaculis neque ornare. Mauris eleifend interdum
+				sapien eu dapibus. Sed sit amet ullamcorper velit. Nunc volutpat elit ac metus vestibulum, et efficitur turpis
+				posuere. Fusce auctor ac massa quis sollicitudin. Nulla in turpis ac metus laoreet consequat ac eget nibh. Fusce
+				sit amet consectetur nisl. In metus metus, imperdiet a magna id, rhoncus pretium mi. Mauris fermentum neque
+				odio, sit amet egestas nibh feugiat vitae. Integer elementum mauris at mi interdum, ut volutpat mi maximus.
+			</p>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis ex ultricies, tincidunt magna nec,
+				finibus tellus. Duis a mauris id nibh bibendum efficitur. Donec commodo diam non diam porttitor, rutrum aliquet
+				quam euismod. In ac leo mi. Vivamus ornare ipsum in ligula lacinia tristique. Quisque scelerisque massa nec orci
+				facilisis rutrum. Suspendisse semper lorem eu ex posuere, vel iaculis neque ornare. Mauris eleifend interdum
+				sapien eu dapibus. Sed sit amet ullamcorper velit. Nunc volutpat elit ac metus vestibulum, et efficitur turpis
+				posuere. Fusce auctor ac massa quis sollicitudin. Nulla in turpis ac metus laoreet consequat ac eget nibh. Fusce
+				sit amet consectetur nisl. In metus metus, imperdiet a magna id, rhoncus pretium mi. Mauris fermentum neque
+				odio, sit amet egestas nibh feugiat vitae. Integer elementum mauris at mi interdum, ut volutpat mi maximus.
+			</p>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis ex ultricies, tincidunt magna nec,
+				finibus tellus. Duis a mauris id nibh bibendum efficitur. Donec commodo diam non diam porttitor, rutrum aliquet
+				quam euismod. In ac leo mi. Vivamus ornare ipsum in ligula lacinia tristique. Quisque scelerisque massa nec orci
+				facilisis rutrum. Suspendisse semper lorem eu ex posuere, vel iaculis neque ornare. Mauris eleifend interdum
+				sapien eu dapibus. Sed sit amet ullamcorper velit. Nunc volutpat elit ac metus vestibulum, et efficitur turpis
+				posuere. Fusce auctor ac massa quis sollicitudin. Nulla in turpis ac metus laoreet consequat ac eget nibh. Fusce
+				sit amet consectetur nisl. In metus metus, imperdiet a magna id, rhoncus pretium mi. Mauris fermentum neque
+				odio, sit amet egestas nibh feugiat vitae. Integer elementum mauris at mi interdum, ut volutpat mi maximus.
+			</p>
+		</div>
+
+		<div id="projects" class="section pt-5">
+			<h2>Projects</h2>
+			<p>Look at these projects I'm working on!</p>
+
+			<div class="row">
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6">
+					<a class="text-reset text-decoration-none" href="https://github.com/GoudronViande24/personal-website-template"
+						target="_blank">
+						<div class="card mb-3">
+							<div class="card-img-top" style="background-image: url('./placeholder.svg');"></div>
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-github me-3"></i>personal-website-template
+								</h5>
+								<p class="card-text">
+									A template for a simple personal website, featuring GitHub repos, skills, certificates and more.
+								</p>
+								<p class="card-text">
+									<small class="text-muted">HTML, CSS & JS</small>
+								</p>
+							</div>
+						</div>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="skills" class="section pt-5">
+			<h2>Skills</h2>
+			<p>What I can do:</p>
+			<div class="row">
+
+				<div class="col-xl-3 col-sm-4 text-center mb-4">
+					<i class="bi bi-filetype-js fs-1"></i>
+					<div class="progress my-3">
+						<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+							aria-valuemax="100"></div>
+					</div>
+					<h5>JavaScript</h5>
+				</div>
+
+				<div class="col-xl-3 col-sm-4 text-center mb-4">
+					<i class="bi bi-filetype-css fs-1"></i>
+					<div class="progress my-3">
+						<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+							aria-valuemax="100"></div>
+					</div>
+					<h5>CSS</h5>
+				</div>
+
+				<div class="col-xl-3 col-sm-4 text-center mb-4">
+					<i class="bi bi-filetype-php fs-1"></i>
+					<div class="progress my-3">
+						<div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+							aria-valuemax="100"></div>
+					</div>
+					<h5>PHP</h5>
+				</div>
+
+				<div class="col-xl-3 col-sm-4 text-center mb-4">
+					<i class="bi bi-filetype-py fs-1"></i>
+					<div class="progress my-3">
+						<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+							aria-valuemax="100"></div>
+					</div>
+					<h5>Python</h5>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="achievements" class="section pt-5">
+			<h2>Achievements</h2>
+			<p>Here are my finished studies and certificates</p>
+			<div class="row">
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<div class="card mb-3">
+						<div class="card-header">
+							TestDome
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">JavaScript certification</h5>
+							<i class="bi bi-star-fill"></i>
+							<p class="card-text">Gold: Top 10%</p>
+							<a href="https://app.testdome.com/cert/bb7db87905c4461cad2f457fb605da00" target="_blank"
+								class="btn btn-secondary">
+								See certificate
+							</a>
+						</div>
+						<div class="card-footer text-muted">November 7, 2021</div>
+					</div>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<div class="card mb-3">
+						<div class="card-header">
+							TestDome
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Node.js certification</h5>
+							<i class="bi bi-star-fill"></i>
+							<p class="card-text">Gold: Top 10%</p>
+							<a href="https://app.testdome.com/cert/d10899b3582046c1b9e532874ce1a0d1" target="_blank"
+								class="btn btn-secondary">
+								See certificate
+							</a>
+						</div>
+						<div class="card-footer text-muted">January 22, 2022</div>
+					</div>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<div class="card mb-3">
+						<div class="card-header">
+							Sololearn
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">JavaScript course</h5>
+							<i class="bi bi-star-fill"></i>
+							<p class="card-text">&nbsp;</p>
+							<a href="https://www.sololearn.com/certificates/course/en/15858540/1024/landscape/png" target="_blank"
+								class="btn btn-secondary">
+								See certificate
+							</a>
+						</div>
+						<div class="card-footer text-muted">February 2, 2022</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="contact" class="section pt-5">
+			<h2>Contact me</h2>
+			<p>Want to get in touch?</p>
+
+			<div class="row">
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="mailto:hello@example.com">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-envelope-fill fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									hello@example.com
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="tel:+11234567890">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-phone-fill fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									+1 (123) 456-7890
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="https://discord.artivain.com" target="_blank">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-discord fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									GoudronViande24#7211
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-facebook fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									Thomas Fournier
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="https://instagram.com/Artivain" target="_blank">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-instagram fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									Artivain
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-xl-4 col-sm-6 text-center">
+					<a class="text-reset text-decoration-none" href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
+						<div class="card mb-3 py-3">
+							<div class="card-body">
+								<h5 class="card-title">
+									<i class="bi bi-twitter fs-1"></i>
+								</h5>
+								<h5 class="card-text">
+									Thomas Fournier
+								</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+		</div>
+
+		<footer class="my-3">
+			<hr>
+			<div class="footer-content d-md-flex flex-wrap justify-content-between">
+				<div class="copyright">
+					&copy; <span id="year"></span> Thomas Fournier
+				</div>
+				<div class="credit">
+					Template:
+					<a href="https://github.com/GoudronViande24/personal-website-template" target="_blank">Personal
+						Website</a> by
+					<a href="https://github.com/GoudronViande24" target="_blank">GoudronViande24</a>
+				</div>
+			</div>
+		</footer>
+
+	</div> <!-- end container -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script src="script.js" type="module"></script>
+</body>
+
+</html>
