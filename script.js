@@ -1,8 +1,6 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 import axios from "https://cdn.skypack.dev/axios";
 import showdown from "https://cdn.skypack.dev/showdown";
-import JSZip from 'https://cdn.skypack.dev/jszip';
-import JSZipUtils from 'https://cdn.skypack.dev/jszip-utils';
 
 const octokit = new Octokit();
 const converter = new showdown.Converter({
@@ -766,21 +764,13 @@ document.getElementById("json-import-button").addEventListener("click", importFr
  */
 async function generateWebsite() {
 	try {
-		// Prepare the HTML template
-		let zip;
-
-		await JSZipUtils.getBinaryContent("https://github.com/GoudronViande24/personal-website-template/archive/refs/heads/main.zip", async (err, data) => {
-			if (err) throw err;
-			zip = await JSZip.loadAsync(data);
-		});
-
 		let data = await fetch("./template.html");
 		let html = await data.text();
 
 		// Form
-		html.replace("{{name}}", form.name.value);
-		html.replace("{{nickname}}", form.nickname.value);
-		html.replace("{{avatar}}", form.avatar.value);
+		html = html.replaceAll("{{name}}", form.name.value);
+		html = html.replace("{{nickname}}", form.nickname.value);
+		html = html.replace("{{avatar}}", form.avatar.value);
 
 		// Social accounts
 		[
@@ -800,13 +790,176 @@ async function generateWebsite() {
 			"stack-overflow",
 			"vimeo"
 		].forEach(i => {
+			if (!form[i].value) return;
 			const index = html.indexOf("{{social}}");
 			const link = `<a href="${form[i].value}"><i class="bi bi-${i}"></i></a>`
 			html = html.slice(0, index) + link + html.slice(index);
 		});
-		html.replace("{{social}}", "");
+		html = html.replace("{{social}}", "");
 
-		
+		// About me
+		let aboutMe = "";
+		let aboutMeMode = document.querySelector("input[name='about-me-mode']:checked").value;
+
+		switch (aboutMeMode) {
+			case "text":
+				aboutMe = form["about-me"].innerHTML;
+				break;
+
+			case "md":
+				aboutMe = converter.makeHtml(form["about-me"].innerText);
+				break;
+
+			case "html":
+				aboutMe = form["about-me"].innerText;
+				break;
+
+			default:
+				return alert("About me mode is not valid.");
+		}
+
+		html = html.replace("{{about-me}}", aboutMe);
+
+		// Projects
+		const projectTemplate = `
+			<div class="col-xl-4 col-sm-6">
+				<a class="text-reset text-decoration-none" href="{{url}}"
+					target="_blank">
+					<div class="card mb-3">
+						<div class="card-img-top" style="background-image: url('{{thumbnail}}');"></div>
+						<div class="card-body">
+							<h5 class="card-title">
+								<i class="bi bi-{{icon}} me-3"></i>{{name}}
+							</h5>
+							<p class="card-text">
+								{{description}}
+							</p>
+							<p class="card-text">
+								<small class="text-muted">{{skills}}</small>
+							</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		`;
+
+		projects.forEach(project => {
+			let toAdd = projectTemplate
+				.replace("{{name}}", project.querySelector(`input.project-name`).value)
+				.replace("{{icon}}", project.querySelector(`input.project-icon`).value)
+				.replace("{{description}}", project.querySelector(`input.project-description`).value)
+				.replace("{{skills}}", project.querySelector(`input.project-skills`).value)
+				.replace("{{url}}", project.querySelector(`input.project-url`).value)
+				.replace("{{thumbnail}}", project.querySelector(`input.project-thumbnail`).value);
+
+			const index = html.indexOf("{{projects}}");
+			html = html.slice(0, index) + toAdd + html.slice(index);
+		});
+
+		html = html.replace("{{projects}}", "");
+
+		// Skills
+		const skillTemplate = `
+			<div class="col-xl-3 col-sm-4 text-center mb-4">
+				<i class="bi bi-{{icon}} fs-1"></i>
+				<div class="progress my-3">
+					<div class="progress-bar" role="progressbar" style="width: {{percentage}}%" aria-valuenow="{{percentage}}" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<h5>{{name}}</h5>
+			</div>
+		`;
+
+		skills.forEach(skill => {
+			let toAdd = skillTemplate
+				.replace("{{name}}", skill.querySelector("input.skill-name").value)
+				.replace("{{icon}}", skill.querySelector("input.skill-icon").value)
+				.replaceAll("{{percentage}}", skill.querySelector("input.skill-percentage").value);
+
+			const index = html.indexOf("{{skills}}");
+			html = html.slice(0, index) + toAdd + html.slice(index);
+		});
+
+		html = html.replace("{{skills}}", "");
+
+		// Achievements
+		const achievementTemplate = `
+			<div class="col-xl-4 col-sm-6 text-center">
+				<div class="card mb-3">
+					<div class="card-header">
+						{{school}}
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">{{name}}</h5>
+						<i class="bi bi-{{icon}}"></i>
+						<p class="card-text">{{description}}</p>
+						<a href="{{link}}" target="_blank"
+							class="btn btn-secondary">
+							See certificate
+						</a>
+					</div>
+					<div class="card-footer text-muted">{{date}}</div>
+				</div>
+			</div>
+		`;
+
+		achievements.forEach(achievement => {
+			let toAdd = achievementTemplate
+				.replace("{{name}}", achievement.querySelector("input.achievement-name").value)
+				.replace("{{icon}}", achievement.querySelector("input.achievement-icon").value)
+				.replace("{{school}}", achievement.querySelector("input.achievement-school").value)
+				.replace("{{description}}", achievement.querySelector("input.achievement-description").value)
+				.replace("{{link}}", achievement.querySelector("input.achievement-link").value)
+				.replace("{{date}}", achievement.querySelector("input.achievement-date").value);
+
+			const index = html.indexOf("{{achievements}}");
+			html = html.slice(0, index) + toAdd + html.slice(index);
+		});
+
+		html = html.replace("{{achievements}}", "");
+
+		// Contact informations
+		const contactMethodTemplate = `
+			<div class="col-xl-4 col-sm-6 text-center">
+				<a class="text-reset text-decoration-none" href="{{link}}">
+					<div class="card mb-3 py-3">
+						<div class="card-body">
+							<h5 class="card-title">
+								<i class="bi bi-{{icon}} fs-1"></i>
+							</h5>
+							<h5 class="card-text">
+								{{name}}
+							</h5>
+						</div>
+					</div>
+				</a>
+			</div>
+		`;
+
+		contactMethods.forEach(method => {
+			let toAdd = contactMethodTemplate
+				.replace("{{name}}", method.querySelector("input.contact-info-name").value)
+				.replace("{{icon}}", method.querySelector("input.contact-info-icon").value)
+				.replace("{{link}}", method.querySelector("input.contact-info-link").value);
+
+			const index = html.indexOf("{{contact-info}}");
+			html = html.slice(0, index) + toAdd + html.slice(index);
+		});
+
+		html = html.replace("{{contact-info}}", "");
+
+		// Export generated HTML file
+		const element = document.createElement("a");
+		element.setAttribute("href", "data:text/html;charset=utf-8," + encodeURIComponent(html));
+		element.setAttribute("download", "index.html");
+		element.style.display = "node";
+
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+
+		window.open("/guide.html", "_blank");
+
 	} catch (e) {
 		alert("An error occured. Check console for details.");
 		console.error(e);
