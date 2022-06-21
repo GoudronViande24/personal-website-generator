@@ -958,7 +958,7 @@ async function generateWebsite() {
 		element.click();
 		document.body.removeChild(element);
 
-		window.open("/guide.html", "_blank");
+		window.open("./guide.html", "_blank");
 
 	} catch (e) {
 		alert("An error occured. Check console for details.");
